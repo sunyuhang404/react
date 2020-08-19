@@ -13,12 +13,14 @@ type Node = {|
   sortIndex: number,
 |};
 
+// 像列表中添加任务节点 并排序
 export function push(heap: Heap, node: Node): void {
   const index = heap.length;
   heap.push(node);
   siftUp(heap, node, index);
 }
 
+// 取出列表中第一个元素, 并出判空处理
 export function peek(heap: Heap): Node | null {
   const first = heap[0];
   return first === undefined ? null : first;
@@ -38,11 +40,16 @@ export function pop(heap: Heap): Node | null {
   }
 }
 
+// 排序
 function siftUp(heap, node, i) {
   let index = i;
   while (true) {
+    // 二进制表示向右移动一位
+    // 相当于 (index - 1) / 2
     const parentIndex = (index - 1) >>> 1;
     const parent = heap[parentIndex];
+    // 用之前的元素和当前添加的元素做对比, 用sortIndex(排序优先级)做对比
+    // 大的放到后面
     if (parent !== undefined && compare(parent, node) > 0) {
       // The parent is larger. Swap positions.
       heap[parentIndex] = node;
@@ -86,6 +93,7 @@ function siftDown(heap, node, i) {
   }
 }
 
+// 对比两个任务的排序优先级
 function compare(a, b) {
   // Compare sort index first, then task id.
   const diff = a.sortIndex - b.sortIndex;

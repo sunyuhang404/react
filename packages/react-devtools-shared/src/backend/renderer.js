@@ -112,6 +112,7 @@ type ReactTypeOfSideEffectType = {|
 |};
 
 // Some environments (e.g. React Native / Hermes) don't support the performance API yet.
+// 获取当前时间, 如果不支持 performance 就改用 Date.now()
 const getCurrentTime =
   typeof performance === 'object' && typeof performance.now === 'function'
     ? () => performance.now()
